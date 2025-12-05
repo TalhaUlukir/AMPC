@@ -27,22 +27,83 @@ The **AMPC Toolbox** provides a unified, fully algebraic formulation of Model Pr
 
 ---
 
+## 🎛 Simulink Block Overview
+
+The AMPC Toolbox provides a drop-in Simulink block for real-time implementation.
+
+### **Inputs**
+- `r(k)` — Reference signal  
+- `y(k)` or `x(k)` — Measured outputs or states  
+
+### **Outputs**
+- `u(k)` — Constrained control input  
+- *(Optional)* computation time `t_c`
+
+### **Mask Parameters**
+- Discrete-time plant model: `A`, `B`, `C`, `D`, `Ts`
+- Enable/disable:
+  - Integral action  
+  - Disturbance input  
+  - Rate limit (Δu)  
+  - Output-constraint shaping  
+- Weight matrices: `Q`, `R`, `P`
+- Prediction horizon `N`
+- Constraint limits: `u_min`, `u_max`, `y_min`, `y_max`, `u_dot_max`
+
+### **Automatic Mode Selection**
+The block internally chooses among **16 AMPC controller modes** based on mask options.
+
+---
+
+## ⚙️ How It Works
+
+### **Offline Stage (initialization, once)**
+- Model augmentation  
+- Constraint symmetrization  
+- Batch matrices `Sy`, `Su`  
+- Cost condensation → `H`, `F`, `Y`  
+- Algebraic matrices `K1–K5`
+
+### **Online Stage (every control step)**
+
+A closed-form nested–tanh control law is evaluated:
+
+```matlab
+u(k) = Uc * tanh( Uc^-1 * ( K1*tanh(K2*x + K3*tanh(K4*x)) - K5*x ) );
+```
+
+---
+
+# 📊 **Performance Summary**
+
+```markdown
+
+
+Measured online computation time (based on IFAC WC simulations):
+
+| System | Case | N=10 | N=20 | N=50 | N=100 |
+|--------|------|-------|-------|-------|--------|
+| 2-state | 1  | 0.0068 µs | 0.010 µs | 0.041 µs | 0.160 µs |
+| 2-state | 8  | 0.0091 µs | 0.026 µs | 0.053 µs | 0.206 µs |
+| 2-state | 16 | 0.011 µs  | 0.045 µs | 0.073 µs | 0.293 µs |
+| 4-state | 1  | 0.018 µs | 0.113 µs | 0.126 µs | 0.339 µs |
+| 4-state | 8  | 0.022 µs | 0.120 µs | 0.138 µs | 0.495 µs |
+| 4-state | 16 | 0.046 µs | 0.129 µs | 0.149 µs | 0.568 µs |
+```
+### **Key Findings**
+- Runtime is **nearly horizon-invariant**
+- All controller modes exhibit similar execution times
+- Suitable for embedded real-time systems  
+- Constraint satisfaction is smooth and stable  
+
+
+---
+
 ## 📦 Installation
 
-### **Option 1 — Install the Toolbox File**
 1. Download **`AMPC.mltbx`**
 2. Double-click to install
 3. MATLAB automatically registers the toolbox under  
    **Home → Add-Ons → Algebraic MPC Toolbox**
-   
-## 🎛 Simulink Block Overview
-- Inputs: r(k), y(k)/x(k)
-- Outputs: u(k), optional t_c
-- Mask parameters with categories
-- Automatic case selection (16 AMPC modes)
-- Short diagram placeholder
 
 
-### **Option 2 — Clone the Repository**
-```bash
-git clone https://github.com/<your-username>/AMPC-Toolbox.git

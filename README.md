@@ -74,7 +74,7 @@ u(k) = Uc * tanh( Uc^-1 * ( K1*tanh(K2*x + K3*tanh(K4*x)) - K5*x ) );
 
 ---
 
-# 📊 **Performance Summary**
+## 📊 **Performance Summary**
 
 ```markdown
 
@@ -90,12 +90,11 @@ Measured online computation time (based on IFAC WC simulations):
 | 4-state | 8  | 0.022 µs | 0.120 µs | 0.138 µs | 0.495 µs |
 | 4-state | 16 | 0.046 µs | 0.129 µs | 0.149 µs | 0.568 µs |
 ```
-### **Key Findings**
+## **Key Findings**
 - Runtime is **nearly horizon-invariant**
 - All controller modes exhibit similar execution times
 - Suitable for embedded real-time systems  
 - Constraint satisfaction is smooth and stable  
-
 
 ---
 
@@ -105,5 +104,21 @@ Measured online computation time (based on IFAC WC simulations):
 2. Double-click to install
 3. MATLAB automatically registers the toolbox under  
    **Home → Add-Ons → Algebraic MPC Toolbox**
+   
+---
+## 📚 Academic References
 
+The theoretical foundations and application areas of this toolbox are supported by the following peer-reviewed publications:
+
+[1] Algebraic MPC Theory
+Dursun, U., Yıldız Taşkıkarağoğlu, F., & Üstoğlu, İ.
+An algebraic and suboptimal solution of constrained model predictive control via tangent hyperbolic function.
+Asian Journal of Control, 2020.
+DOI: https://doi.org/10.1002/asjc.2357
+
+[2] Algebraic MPC for Automatic Landing
+Ulukır, T., Dursun, U., & Üstoğlu, İ.
+Automatic landing of fixed-wing aircraft with constrained algebraic model predictive control.
+Control Theory and Technology, 2025.
+DOI: https://doi.org/10.1007/s11768-025-00275-5
 

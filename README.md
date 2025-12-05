@@ -100,7 +100,7 @@ Measured online computation time (based on IFAC WC simulations):
 
 ## 📦 Installation
 
-1. Download **`AMPC.mltbx`**
+1. [Download Toolbox](AMPC.mltbx)
 2. Double-click to install
 3. MATLAB automatically registers the toolbox under  
    **Home → Add-Ons → Algebraic MPC Toolbox**
